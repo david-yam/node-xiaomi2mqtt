@@ -193,18 +193,24 @@ function publishConnectionStatus () {
 }
 
 function publishDeviceData (device, newState, extraData = {}) {
+  /*
   let data = {
     val: newState, // Using val according to the MQTT Smarthome specs.
     battery: device.getBatteryPercentage(),
     name: getFriendlyName(device.getSid()),
     ts: Date.now()
+  }*/
+
+  var name = device.getSid()
+  if (getFriendlyName(device.getSid()) !== null) {  
+    name = getFriendlyName(device.getSid())
   }
 
-  Object.assign(data, extraData)
-  var topic = `${config.name}/status/${device.getType()}/${device.getSid()}`
+  //Object.assign(data, extraData)
+  var topic = `${config.name}/${name}/status`
   log.info(`Publishing ${newState} to ${topic}`)
   mqttClient.publish(topic,
-    JSON.stringify(data),
+    newState,
     {qos: 0, retain: true}
   )
 }
