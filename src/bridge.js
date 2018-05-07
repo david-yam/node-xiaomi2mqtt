@@ -108,16 +108,16 @@ function start () {
         case 'switch':
           publishDeviceData(device, 'unknown')
           device.on('click', () => {
-            publishDeviceData(device, 'clicked')
+            publishDeviceData(device, '0')
           })
           device.on('doubleClick', () => {
-            publishDeviceData(device, 'double_clicked')
+            publishDeviceData(device, '1')
           })
           device.on('longClickPress', () => {
-            publishDeviceData(device, 'pressed')
+            publishDeviceData(device, '2')
           })
           device.on('longClickRelease', () => {
-            publishDeviceData(device, 'released')
+            //publishDeviceData(device, 'released')
           })
           break
         case 'motion':
