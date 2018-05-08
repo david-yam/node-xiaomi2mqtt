@@ -213,6 +213,11 @@ function publishDeviceData (device, newState, extraData = {}) {
     newState,
     {qos: 0, retain: true}
   )
+  var batteryTopic = `${config.name}/${name}/battery/status`
+  mqttClient.publish(batteryTopic,
+    device.getBatteryPercentage().toString(),
+    {qos: 0, retain: true}
+  )
 }
 
 let magnets = []
@@ -266,12 +271,12 @@ function publishHTSensor (sensorDevice) {
     )
   }
 
-  if(sensorDevice.getBatteryPercentage() < 90){
+  //if(sensorDevice.getBatteryPercentage() < 10){
     mqttClient.publish(batteryTopic,
-      "1",
+      sensorDevice.getBatteryPercentage().toString(),
       {qos: 0, retain: true}
     )
-  }
+  //}
 }
 
 // Usefull function
