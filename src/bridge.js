@@ -252,7 +252,7 @@ function publishHTSensor (sensorDevice) {
     sensorDevice.getTemperature().toString(),
     {qos: 0, retain: true}
   )
-  data.val = 
+  
   mqttClient.publish(humTopic,
     sensorDevice.getHumidity().toString(),
     {qos: 0, retain: true}
