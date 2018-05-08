@@ -106,7 +106,7 @@ function start () {
           })
           break
         case 'switch':
-          publishDeviceData(device, 'unknown')
+          //publishDeviceData(device, 'unknown')
           device.on('click', () => {
             publishDeviceData(device, '0')
           })
@@ -121,7 +121,7 @@ function start () {
           })
           break
         case 'motion':
-          publishDeviceData(device, `${device.hasMotion() ? 'motion' : 'no_motion'}`, {lux: device.getLux()})
+          //publishDeviceData(device, `${device.hasMotion() ? 'motion' : 'no_motion'}`, {lux: device.getLux()})
           device.on('motion', () => {
             publishDeviceData(device, 'motion', {lux: device.getLux()})
           })
@@ -266,7 +266,7 @@ function publishHTSensor (sensorDevice) {
     )
   }
 
-  if(sensorDevice.getBatteryPercentage() < 10){
+  if(sensorDevice.getBatteryPercentage() < 90){
     mqttClient.publish(batteryTopic,
       1,
       {qos: 0, retain: true}
