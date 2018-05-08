@@ -249,16 +249,16 @@ function publishHTSensor (sensorDevice) {
     ts: Date.now()
   }*/
   mqttClient.publish(tempTopic,
-    sensorDevice.getTemperature().tostring(),
+    sensorDevice.getTemperature().toString(),
     {qos: 0, retain: true}
   )
   data.val = 
   mqttClient.publish(humTopic,
-    sensorDevice.getHumidity().tostring(),
+    sensorDevice.getHumidity().toString(),
     {qos: 0, retain: true}
   )
 
-  let pressure = sensorDevice.getPressure().tostring()
+  let pressure = sensorDevice.getPressure().toString()
   if (pressure !== null) {
     mqttClient.publish(presTopic,
       pressure,
