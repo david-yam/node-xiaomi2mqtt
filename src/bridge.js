@@ -232,30 +232,43 @@ function publishMagnetState (device, newState) {
 }
 
 function publishHTSensor (sensorDevice) {
-  const tempTopic = `${config.name}/status/temperature/${sensorDevice.getSid()}`
-  const humTopic = `${config.name}/status/humidity/${sensorDevice.getSid()}`
-  const presTopic = `${config.name}/status/pressure/${sensorDevice.getSid()}`
+  var name = sensorDevice.getSid()
+  if (getFriendlyName(sensorDevice.getSid()) !== null) {  
+    name = getFriendlyName(sensorDevice.getSid())
+  }
+
+  const tempTopic = `${config.name}/${name}/temperature`
+  const humTopic = `${config.name}/${name}/humidity`
+  const presTopic = `${config.name}/${name}/pressure`
+  const batteryTopic = `${config.name}/${name}/battery/status`
+  /*
   let data = {
     val: sensorDevice.getTemperature(),
     battery: sensorDevice.getBatteryPercentage(),
     name: getFriendlyName(sensorDevice.getSid()),
     ts: Date.now()
-  }
+  }*/
   mqttClient.publish(tempTopic,
-    JSON.stringify(data),
+    sensorDevice.getTemperature(),
     {qos: 0, retain: true}
   )
-  data.val = sensorDevice.getHumidity()
+  data.val = 
   mqttClient.publish(humTopic,
-    JSON.stringify(data),
+    sensorDevice.getHumidity(),
     {qos: 0, retain: true}
   )
 
   let pressure = sensorDevice.getPressure()
   if (pressure !== null) {
-    data.val = pressure
     mqttClient.publish(presTopic,
-      JSON.stringify(data),
+      pressure,
+      {qos: 0, retain: true}
+    )
+  }
+
+  if(sensorDevice.getBatteryPercentage() < 10){
+    mqttClient.publish(batteryTopic,
+      1,
       {qos: 0, retain: true}
     )
   }
