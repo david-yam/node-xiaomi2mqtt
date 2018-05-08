@@ -268,7 +268,7 @@ function publishHTSensor (sensorDevice) {
 
   if(sensorDevice.getBatteryPercentage() < 90){
     mqttClient.publish(batteryTopic,
-      1,
+      "1",
       {qos: 0, retain: true}
     )
   }
